@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'blogapp',
     'rest_framework',
     "rest_framework_simplejwt",
+    'corsheaders',
 ]
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -51,6 +52,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -75,6 +77,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'new_django_api.wsgi.application'
 
@@ -133,10 +136,10 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'blogapp.CustomUser'
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR/"static"
-MEDIA_URL = "img/"
-MEDIA_ROOT = BASE_DIR / "media"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 
 SIMPLE_JWT = {
@@ -147,3 +150,11 @@ import os
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+CORS_ALLOWED_ORIGINS = [
+"http://localhost:5173",
+"http://localhost:5174",
+"http://localhost:5175",
+
+]
