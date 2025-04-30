@@ -127,11 +127,16 @@ def get_username(request):
 
 @api_view(['GET'])
 def get_userinfo(request, username):
-    User = get_user_model()
-    user = User.objects.get(username=username)
-    serializer = UserInfoSerializer(user)
-    return Response(serializer.data)
-
+    if username == "null" or not username:
+        return Response({"error": "Invalid username"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    try:
+        User = get_user_model()
+        user = User.objects.get(username=username)
+        serializer = UserInfoSerializer(user)
+        return Response(serializer.data)
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(["GET"])
 def get_user(request, email):
